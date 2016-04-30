@@ -5,7 +5,7 @@ A simple demo file explaining how to use the method to remove highlights in imag
 
 import logging
 
-from src import *
+from specularity_removal import *
 
 
 # change the log level accordingly

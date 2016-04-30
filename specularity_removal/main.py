@@ -3,7 +3,7 @@ import numpy as np
 import logging
 import os
 
-from src.homography import homography
+from specularity_removal.homography import homography
 
 RESULTS_DIR = 'results/'
 
