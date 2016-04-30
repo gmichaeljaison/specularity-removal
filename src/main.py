@@ -7,10 +7,20 @@ from src.homography import homography
 
 RESULTS_DIR = 'results/'
 
+DIFF_THRESHOLD = 20
+
 
 def remove_specularity(img_files):
+    """
+    Removes highlights/specularity in Images from multiple view points
+
+    :param img_files: File names of input images in horizontal order (important)
+    """
+    # read images from file names
     imgs = read_images(img_files)
 
+    # solve each pair of image.
+    # assumption: Input images are in order
     for i in range(len(imgs) - 1):
         logging.debug('processing images {} and {}'.format(i+1, i+2))
         imgs[i], imgs[i+1] = _solve(imgs[i], imgs[i + 1])
@@ -24,6 +34,14 @@ def remove_specularity(img_files):
 
 
 def read_images(img_files):
+    """
+    Reads images from the given file locations.
+    Also does basic validations like:
+        - All images should be of same size
+
+    :param img_files: Image file names
+    :return: Read image objects
+    """
     imgs = list()
     for fname in img_files:
         img = cv.imread(fname)
@@ -47,12 +65,16 @@ def read_images(img_files):
 def _solve(img1, img2):
     h, w, d = img1.shape
 
+    # step 1: Find homography of 2 images
     homo = homography(img2, img1)
 
+    # step 2: warp image2 to image1 frame
     img2_w = cv.warpPerspective(img2, homo, (w, h))
 
+    # step 3: resolve highlights by picking the best pixels out of two images
     im1 = _resolve_spec(img1, img2_w)
 
+    # step 4: repeat the same process for Image2 using warped Image1
     im_w = cv.warpPerspective(im1, np.linalg.inv(homo), (w, h))
     im2 = _resolve_spec(img2, im_w)
 
@@ -65,7 +87,12 @@ def _resolve_spec(im1, im2):
     img1 = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
     img2 = cv.cvtColor(im2, cv.COLOR_BGR2GRAY)
 
-    mask = np.logical_and((img1 - img2) > 20, img1 > img2)
+    # Best pixel selection criteria
+    #   1. Pixel difference should be more than 20. (just an experimentally value. Free to change!)
+    #   2. Best pixel should have less intensity
+    #   3. pixel should not be pure black. (just an additional constraint
+    #       to remove black background created by warping)
+    mask = np.logical_and((img1 - img2) > DIFF_THRESHOLD, img1 > img2)
     mask = np.logical_and(mask, img2 != 0)
 
     im[mask] = im2[mask]

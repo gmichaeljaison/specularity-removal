@@ -12,6 +12,15 @@ MIN_MATCH_COUNT = 20
 
 
 def homography(img1, img2, visualize=False):
+    """
+    Finds Homography matrix from Image1 to Image2.
+        Two images should be a plane and can change in viewpoint
+
+    :param img1: Source image
+    :param img2: Target image
+    :param visualize: Flag to visualize the matched pixels and Homography warping
+    :return: Homography matrix. (or) Homography matrix, Visualization image - if visualize is True
+    """
     sift = cv.xfeatures2d.SIFT_create()
     kp1, desc1 = sift.detectAndCompute(img1, None)
     kp2, desc2 = sift.detectAndCompute(img2, None)
