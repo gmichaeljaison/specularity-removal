@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='specularity_removal',
-    packages=['src'],
+    packages=['specularity_removal'],
     version='0.1',
     description='Implements specular removal in images captured from various view points',
     author='Michael Jaison Gnanasekar, Shreyas Joshi',
