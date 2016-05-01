@@ -28,12 +28,14 @@ To use the specularity removal module in your code, follow the below sample snip
 - It is faster if you pass the downscaled version of actual images.
 
 ```python
+import specularity_removal as sp
+
 fnames = [
     'data/pshycology-book-1.jpg',
     'data/pshycology-book-2.jpg',
     'data/pshycology-book-3.jpg'
 ]
-remove_specularity(fnames)
+sp.remove_specularity(fnames)
 ```
 
 ## Example 1
