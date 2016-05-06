@@ -1,6 +1,6 @@
 # Specularity removal in multi-viewpoint images
 
-The package is an open source utility to remove specularity in Images that has been captured from multiple viewpoints.
+The package is an open source utility to remove specularity in Images captured from multiple viewpoints.
 
 #### Disclaimer
 The method uses Homography to find the best pixels available in other viewpoint images which are specular-free. It works only for planar and textured objects.
