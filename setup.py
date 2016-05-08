@@ -4,7 +4,7 @@ setup(
     name='specularity_removal',
     packages=['specularity_removal'],
     version='0.1',
-    description='Implements specular removal in images captured from various view points',
+    description='The package is an open source utility to remove specularity in Images captured from multiple viewpoints',
     author='Michael Jaison Gnanasekar, Shreyas Joshi',
     author_email='gmichaeljaison@gmail.com, shreyasvj25@gmail.com',
     url='https://github.com/gmichaeljaison/specularity-removal',
